@@ -10,16 +10,23 @@ import SwiftUI
 
 struct LandmarkList: View {
     var body: some View {
-        // step one make the list dynamic
-        List() {
-           Landmarkrow(landmark: landmarkData[0])
-            Landmarkrow(landmark: landmarkData[1])
+        NavigationView {
+            List(landmarkData) { landmark in
+                NavigationLink(destination: LandmarkDetail(landmark: landmark)){
+            Landmarkrow(landmark: landmark)
         }
+        }
+        .navigationBarTitle(Text("Landmarks"))
+      }
     }
 }
 
 struct LandmarkList_Previews: PreviewProvider {
     static var previews: some View {
+        ForEach(["iPhone SE", "iPhone XS Max"], id: \.self){ deviceName in
         LandmarkList()
+        .previewDevice(PreviewDevice(rawValue: deviceName))
+            .previewDisplayName(deviceName)
+        }
     }
 }
